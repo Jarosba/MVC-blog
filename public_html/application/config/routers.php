@@ -1,16 +1,31 @@
 <?php
 
 return [
+    //Main Controller
 
     ''=>['controller'=>'main','action'=>'index', ],
 
     'contact'=> ['controller' =>'main', 'action'=>'contact',   ],
 
-    'account/login'=> ['controller' =>'account', 'action'=>'login',   ],
+    'about'=> ['controller' =>'main', 'action'=>'about',   ],
 
-    'account/hide'=> ['controller' =>'account', 'action'=>'login',   ],
+    'contact'=> ['controller' =>'main', 'action'=>'contact',   ],
 
-    'account/register'=>['controller'=>'account','action'=>'register',  ],
+    'post'=>['controller'=>'main','action'=>'post',  ],
 
-    'news/show'=>['controller'=>'news', 'action'=>'show', ],
+    //AdminController
+
+    'admin/login'=>['controller'=>'admin', 'action'=>'login', ],
+
+    'admin/logout'=>['controller'=>'admin', 'action'=>'logout', ],
+
+
+    'admin/add'=>['controller'=>'admin', 'action'=>'add', ],
+
+    'admin/edit'=>['controller'=>'admin', 'action'=>'edit', ],
+
+    'admin/delete'=>['controller'=>'admin', 'action'=>'delete', ],
+
+    'admin/posts'=>['controller'=>'admin', 'action'=>'posts', ],
+
 ];

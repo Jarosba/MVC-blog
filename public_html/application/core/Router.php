@@ -1,8 +1,7 @@
 <?php
 namespace application\core;
-
-
 use application\core\View ;
+
 
 class Router {
 
@@ -13,12 +12,10 @@ class Router {
     public function __construct()
     {
         $arr=require  'application/config/routers.php';
-
         foreach ($arr as $key => $val)
         {
             $this->add($key, $val);
         }
-
     }
 
     public function add($route, $params)
@@ -27,19 +24,21 @@ class Router {
         $this->routers[$route]=$params;
     }
 
-    public function match()
-    {
-
-        $url= trim($_SERVER['REQUEST_URI'],'/');
-
-        foreach ($this->routers as $route =>$params)
-        {
-            if(preg_match($route ,$url,$matches))
-            {
-               $this->params=$params;
-               return true;
+    public function match() {
+        $url = trim($_SERVER['REQUEST_URI'], '/');
+        foreach ($this->routers as $route => $params) {
+            if (preg_match($route, $url, $matches)) {
+                foreach ($matches as $key => $match) {
+                    if (is_string($key)) {
+                        if (is_numeric($match)) {
+                            $match = (int) $match;
+                        }
+                        $params[$key] = $match;
+                    }
+                }
+                $this->params = $params;
+                return true;
             }
-
         }
         return false;
     }
@@ -49,13 +48,16 @@ class Router {
      */
     public function run(){
        if($this->match()){
-          // echo trim($_SERVER['REQUEST_URI'],'/');
 
            $path='application\controllers\\'.ucfirst($this->params['controller']).'Controller';
+
+           //debug(class_exists($path));
 
            if(class_exists($path))
             {
                 $action=$this->params['action'].'Action';
+
+
                 if(method_exists($path,$action))
                 {
                     $controller = new $path($this->params);
@@ -77,7 +79,7 @@ class Router {
 
            {
             //   View::errorCode(404);
-              echo 'marshrut ne naiden';
+              echo 'ERROR 404';
            }
     }
 
