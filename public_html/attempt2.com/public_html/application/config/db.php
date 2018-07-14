@@ -4,5 +4,5 @@ return [
 	'host' => 'localhost',
 	'name' => 'blog',
 	'user' => 'root',
-	'password' => '123',
+	'password' => 'fatality',
 ];

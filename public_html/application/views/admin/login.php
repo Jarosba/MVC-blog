@@ -4,11 +4,11 @@
         <div class="card-body">
             <form action="/admin/login" method="post">
                 <div class="form-group">
-                    <label>Логин</label>
+                    <label>login</label>
                     <input class="form-control" type="text" name="login">
                 </div>
                 <div class="form-group">
-                    <label>Пароль</label>
+                    <label>password</label>
                     <input class="form-control" type="password" name="password">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Вход</button>

@@ -1,16 +1,21 @@
 <?php
 
 return [
+	'all' => [
+		'login',
+	],
+	'authorize' => [
+		//
+	],
+	'guest' => [
+		//
+	],
+	'admin' => [
+		'posts',
+		'logout',
+		'add',
+		'edit',
+		'delete',
 
-        'all'=> ['login',] ,
-        'authorize'=>[ ],
-        'guest'=>[],
-        'admin'=>['logout',
-                    'add',
-                    'edit',
-                    'delete',
-                    'login',
-                ] ,
-
-
-        ];
+	],
+];

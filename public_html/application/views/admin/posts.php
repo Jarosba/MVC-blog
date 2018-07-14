@@ -19,6 +19,7 @@
                                         <td><?php echo htmlspecialchars($val['name'], ENT_QUOTES); ?></td>
                                         <td><a href="/admin/edit/<?php echo $val['id']; ?>" class="btn btn-primary">Редактировать</a></td>
                                         <td><a href="/admin/delete/<?php echo $val['id']; ?>" class="btn btn-danger">Удалить</a></td>
+                                        <td><a href="/post/<?php echo $val['id']; ?>" class="btn btn-danger">Read</a></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </table>

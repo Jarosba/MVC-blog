@@ -7,22 +7,19 @@
                     <div class="col-sm-4">
                         <form action="/admin/edit/<?php echo $data['id']; ?>" method="post" >
                             <div class="form-group">
-                                <label>Название</label>
+                                <label>Title</label>
                                 <input class="form-control" type="text" value="<?php echo htmlspecialchars($data['name'], ENT_QUOTES); ?>" name="name">
                             </div>
                             <div class="form-group">
-                                <label>Аннотация</label>
+                                <label>Description</label>
                                 <input class="form-control" type="text" value="<?php echo htmlspecialchars($data['description'], ENT_QUOTES); ?>" name="description">
                             </div>
                             <div class="form-group">
-                                <label>Текст</label>
+                                <label>Text</label>
                                 <textarea class="form-control" rows="3" name="text"><?php echo htmlspecialchars($data['text'], ENT_QUOTES); ?></textarea>
                             </div>
-                            <div class="form-group">
-                                <label>Изображение</label>
-                                <input class="form-control" type="file" name="img">
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block">Сохранить</button>
+
+                            <button type="submit" class="btn btn-primary btn-block">Save</button>
                         </form>
                     </div>
                 </div>
