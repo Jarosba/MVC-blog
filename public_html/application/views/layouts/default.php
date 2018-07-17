@@ -16,30 +16,14 @@
             <div class="container">
                 <a class="navbar-brand" href="/">Traveller</a>
 
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/signup">sign up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/signin" >sign in</a>
 
 
-
-             <!--   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fa fa-bars"></i>
-                </button>-->
-
-
-
-
-
-
-
-
-
-
-                    <ul class="navbar-nav ml-auto">
-                                                <li class="nav-item">
-                            <a class="nav-link" href="/about">About project</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/help">Help</a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -57,10 +41,23 @@
 
 
 
-        <footer>
+        <footer class="fixed-bottom">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-md-10 mx-auto">
+
+                        <nav class="navbar navbar-expand-lg navbar-light " >
+
+
+
+                                <a class="copyright text-muted" href="/about">About project</a>
+                            <ul class="navbar-nav ml-auto">
+
+                                <a class="copyright text-muted" href="/help">Help</a>
+                            </ul>
+
+                        </nav>
+
                         <p class="copyright text-muted">&copy; 2018, made by PHP framework</p>
                     </div>
                 </div>
