@@ -60,22 +60,17 @@ return [
         'controller' => 'account',
         'action' => 'signup',
     ],
-    'account/register/{ref:\w+}' => [
+
+    'account/add' => [
         'controller' => 'account',
-        'action' => 'register',
+        'action' => 'add',
     ],
-    'account/recovery' => [
+
+    'account/posts' => [
         'controller' => 'account',
-        'action' => 'recovery',
+        'action' => 'posts',
     ],
-    'account/confirm/{token:\w+}' => [
-        'controller' => 'account',
-        'action' => 'confirm',
-    ],
-    'account/reset/{token:\w+}' => [
-        'controller' => 'account',
-        'action' => 'reset',
-    ],
+
     'account/profile' => [
         'controller' => 'account',
         'action' => 'profile',

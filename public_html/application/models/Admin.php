@@ -44,57 +44,51 @@ class Admin extends Model {
 
 	public function postAdd($post) {
 		$params = [
-			'id' => '',
+			'article_id' => '',
 			'name' => $post['name'],
 			'description' => $post['description'],
 			'text' => $post['text'],
 		];
-		$this->db->query('INSERT INTO posts VALUES (:id, :name, :description, :text)', $params);
+		$this->db->query('INSERT INTO posts VALUES (:article_id, :name, :description, :text)', $params);
 		return $this->db->lastInsertId();
 	}
 
-	public function postEdit($post, $id)
+	public function postEdit($post, $article_id)
     {
 		$params = [
-			'id' => $id,
+			'article_id' => $article_id,
 			'name' => $post['name'],
 			'description' => $post['description'],
 			'text' => $post['text'],
 		];
-		$this->db->query('UPDATE posts SET name = :name, description = :description, text = :text WHERE id = :id', $params);
+		$this->db->query('UPDATE posts SET name = :name, description = :description, text = :text WHERE article_id = :article_id', $params);
 	}
 
-	public function postUploadImage($path, $id)
-    {
-		$img = new Imagick($path);
-		$img->cropThumbnailImage(1080, 600);
-		$img->setImageCompressionQuality(80);
-		$img->writeImage('public/materials/'.$id.'.jpg');
-	}
 
-	public function isPostExists($id)
+
+	public function isPostExists($article_id)
     {
 		$params = [
-			'id' => $id,
+			'article_id' => $article_id,
 		];
-		return $this->db->column('SELECT id FROM posts WHERE id = :id', $params);
+		return $this->db->column('SELECT article_id FROM posts WHERE article_id = :article_id', $params);
 	}
 
-	public function postDelete($id)
+	public function postDelete($article_id)
     {
 		$params = [
-			'id' => $id,
+			'article_id' => $article_id,
 		];
-		$this->db->query('DELETE FROM posts WHERE id = :id', $params);
-		unlink('public/materials/'.$id.'.jpg');
+		$this->db->query('DELETE FROM posts WHERE article_id= :article_id', $params);
+
 	}
 
-	public function postData($id)
+	public function postData($article_id)
     {
 		$params = [
-			'id' => $id,
+			'article_id' => $article_id,
 		];
-		return $this->db->row('SELECT * FROM posts WHERE id = :id', $params);
+		return $this->db->row('SELECT * FROM posts WHERE article_id = :article_id', $params);
 	}
 
 }

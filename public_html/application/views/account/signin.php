@@ -1,25 +1,10 @@
-
-
-
-
 <div class="container ">
 
 
     <div class="row">
         <div class="col-lg-8 mb-4">
-            <form action="account/signin" method="post">
-                <div class="control-group form-group">
-                    <div class="controls">
-                        <label>                             </label>
-                        <input type="text" class="form-control" name="email">
-                    </div>
-                </div>
-                <div class="control-group form-group">
-                    <div class="controls">
-                        <label>E-mail:</label>
-                        <input type="text" class="form-control" name="email">
-                    </div>
-                </div>
+
+            <form action="/account/signin" method="post">
                 <div class="control-group form-group">
                     <div class="controls">
                         <label>Логин:</label>
@@ -30,7 +15,7 @@
                 <div class="control-group form-group">
                     <div class="controls">
                         <label>Пароль</label>
-                        <input type="password" class="form-control" name="password">
+                        <input type="text" class="form-control" name="password">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>

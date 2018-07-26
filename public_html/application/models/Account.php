@@ -3,137 +3,157 @@
 namespace application\models;
 
 use application\core\Model;
-use Imagick;
 
-class Account extends Model {
 
-public function validate($input, $post)
+class Account extends Model
 {
-    $rules = [
-        'email' => [
-            'pattern' => '#^([a-z0-9_.-]{1,20}+)@([a-z0-9_.-]+)\.([a-z\.]{2,10})$#',
-            'message' => 'E-mail адрес указан неверно',
-        ],
-        'login' => [
-            'pattern' => '#^[a-z0-9]{3,15}$#',
-            'message' => 'Логин указан неверно (разрешены только латинские буквы и цифры от 3 до 15 символов',
-        ],
-       
 
-
-        'password' => [
-            'pattern' => '#^[a-z0-9]{10,30}$#',
-            'message' => 'Пароль указан неверно (разрешены только латинские буквы и цифры от 10 до 30 символов',
-        ],
-    ];
-
-    foreach ($input as $val)
+    public function accountvalidate($input, $post)
     {
+        $rules = [
+            'email'    => [
+                'pattern' => '#^/^(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})$/i$#',
+                'message' => 'E-mail адрес указан неверно',
+            ],
+            'login'    => [
+                'pattern' => '#^[a-z0-9]{3,15}$#',
+                'message' => 'Логин указан неверно ',
+            ],
+            'password' => [
+                'pattern' => '#^[a-z0-9]{10,30}$#',
+                'message' => 'Пароль указан неверно ',
+            ],
+        ];
+
+        foreach ($input as $val) {
 
 
-        if (!isset($post[$val]) or empty($post[$val] and !preg_match($rules[$val]['pattern'],$post[$val])))
-        {
-            $this->error=$rules[$val]['message'];
-            return false;
+            if (!isset($post[$val]) or empty($post[$val]
+                    and !preg_match($rules[$val]['pattern'], $post[$val]))
+            ) {
+                $this->error = $rules[$val]['message'];
+
+                return false;
+            }
         }
 
+        return true;
+    }
+
+    public function checkEmailExists($email)
+    {
+        $params = ['email' => $email,];
+
+        return $this->db->column('SELECT author_id FROM authors WHERE email = :email',
+            $params);
     }
 
 
-    return true;
-
-
-}
-
-
-
-
-	public $error;
-
-	public function loginValidate($post)
+    public function checkLoginExists($login)
     {
-		$config = require 'application/config/admin.php';
-		if ($config['login'] != $post['login'] or $config['password'] != $post['password']) {
-			$this->error = 'Логин или пароль указан неверно';
-			return false;
-		}
-		return true;
-	}
+        $params = [
+            'login' => $login,
+        ];
+        if ($this->db->column('SELECT author_id FROM authors WHERE login = :login',
+            $params)
+        ) {
+            $this->error = 'Этот логин уже используется';
 
-	public function postValidate($post, $type)
+            return false;
+        }
+
+        return true;
+    }
+
+
+    public function CreateAccount($post)
     {
-		$nameLen = iconv_strlen($post['name']);
-		$descriptionLen = iconv_strlen($post['description']);
-		$textLen = iconv_strlen($post['text']);
-		if ($nameLen < 3 or $nameLen > 100) {
-			$this->error = 'Название должно содержать от 3 до 100 символов';
-			return false;
-		} elseif ($descriptionLen < 3 or $descriptionLen > 100) {
-			$this->error = 'Описание должно содержать от 3 до 100 символов';
-			return false;
-		} elseif ($textLen < 10 or $textLen > 5000) {
-			$this->error = 'Текст должнен содержать от 10 до 5000 символов';
-			return false;
-		}
+        $params = [
+            'author_id' => '',
+            'email'     => $post['email'],
+            'login'     => $post['login'],
+            'password'  => $post['password'],
+            'resume'    =>''
+        ];
+
+        $this->db->query('INSERT INTO authors VALUES (:author_id, :email, :login,:password,:resume)',
+            $params);
 
 
-		return true;
-	}
+    }
 
-	public function postAdd($post) {
-		$params = [
-			'id' => '',
-			'name' => $post['name'],
-			'description' => $post['description'],
-			'text' => $post['text'],
+    // password_hash($post['password'], PASSWORD_BCRYPT)
 
-		];
-		$this->db->query('INSERT INTO posts VALUES (:id, :name, :description, :text)', $params);
-		return $this->db->lastInsertId();
-	}
 
-	public function postEdit($post, $id)
+    public function checkData($login, $password)
     {
-		$params = [
-			'id' => $id,
-			'name' => $post['name'],
-			'description' => $post['description'],
-			'text' => $post['text'],
-		];
-		$this->db->query('UPDATE posts SET name = :name, description = :description, text = :text WHERE id = :id', $params);
-	}
+        $params = ['login' => $login,];
+        $hash = $this->db->column('SELECT password FROM authors WHERE login = :login', $params);
 
-	public function postUploadImage($path, $id)
-    {
-		$img = new Imagick($path);
-		$img->cropThumbnailImage(1080, 600);
-		$img->setImageCompressionQuality(80);
-		$img->writeImage('public/materials/'.$id.'.jpg');
-	}
+        if ($hash != $password) {
+            return false;
+        }
 
-	public function isPostExists($id)
-    {
-		$params = [
-			'id' => $id,
-		];
-		return $this->db->column('SELECT id FROM posts WHERE id = :id', $params);
-	}
+        return true;
+    }
 
-	public function postDelete($id)
-    {
-		$params = [
-			'id' => $id,
-		];
-		$this->db->query('DELETE FROM posts WHERE id = :id', $params);
-		unlink('public/materials/'.$id.'.jpg');
-	}
 
-	public function postData($id)
+    public function postValidate($post, $type)
     {
-		$params = [
-			'id' => $id,
-		];
-		return $this->db->row('SELECT * FROM posts WHERE id = :id', $params);
-	}
+        $nameLen = iconv_strlen($post['name']);
+        $descriptionLen = iconv_strlen($post['description']);
+        $textLen = iconv_strlen($post['text']);
+        if ($nameLen < 3 or $nameLen > 100) {
+            $this->error = 'Название должно содержать от 3 до 100 символов';
+
+            return false;
+        } elseif ($descriptionLen < 3 or $descriptionLen > 100) {
+            $this->error = 'Описание должно содержать от 3 до 100 символов';
+
+            return false;
+        } elseif ($textLen < 10 or $textLen > 5000) {
+            $this->error = 'Текст должнен содержать от 10 до 5000 символов';
+
+            return false;
+        }
+
+
+        return true;
+    }
+
+
+    public function postAdd($post, $login)
+    {
+        $params = [
+            'article_id'  => '',
+            'name'        => $post['name'],
+            'description' => $post['description'],
+            'text'        => $post['text'],
+            'login'       => $login,
+        ];
+        $this->db->query('INSERT INTO posts VALUES (:article_id, :name, :description, :text,:login)',
+            $params);
+
+        return $this->db->lastInsertId();
+    }
+
+    public function postEdit($post, $article_id)
+    {
+        $params = [
+            'article_id'  => $article_id,
+            'name'        => $post['name'],
+            'description' => $post['description'],
+            'text'        => $post['text'],
+        ];
+        $this->db->query('UPDATE posts SET name = :name, description = :description, text = :text WHERE article_id = :article_id',
+            $params);
+    }
+
+    public function profileEdit($post)
+    {
+
+
+    }
+
 
 }

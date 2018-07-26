@@ -10,6 +10,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="6031b6a3-bded-47a3-947a-2d040c2d56e0" name="vagrant" url="http://192.168.33.11">
+        <fileTransfer host="192.168.33.11" port="22" privateKey="$PROJECT_DIR$/../../.vagrant/machines/default/virtualbox/private_key" rootFolder="/var/www/attempt2.com" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

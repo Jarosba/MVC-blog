@@ -13,6 +13,8 @@ class Db {
 		$this->db = new PDO('mysql:host='.$config['host'].';dbname='.$config['name'].'', $config['user'], $config['password']);
 	}
 
+
+
 	public function query($sql, $params = []) {
 		$stmt = $this->db->prepare($sql);
 		if (!empty($params)) {
@@ -28,6 +30,10 @@ class Db {
 		$stmt->execute();
 		return $stmt;
 	}
+
+
+	/* $query =$this->query($sql);
+	   return $query;*/
 
 	public function row($sql, $params = []) {
 		$result = $this->query($sql, $params);

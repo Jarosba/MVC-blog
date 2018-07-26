@@ -1,6 +1,7 @@
 <?php
 return [
 	'all' => [
+        'signin',
 		//
 	],
 	'authorize' => [
@@ -13,6 +14,9 @@ return [
 		'recovery',
 		'confirm',
 		'reset',
+        'add',
+        'posts',
+        'profile'
 	],
 	'admin' => [
 		//

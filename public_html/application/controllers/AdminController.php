@@ -79,10 +79,10 @@ class AdminController extends Controller {
 
 	public function postsAction() {
 		$mainModel = new Main;
-		$pagination = new Pagination($this->route, $mainModel->postsCount());
+		//$pagination = new Pagination($this->route, $mainModel->postsCount());
 		$vars = [
-			'pagination' => $pagination->get(),
-			'list' => $mainModel->postsList($this->route),
+		//	'pagination' => $pagination->get(),
+			'list' => $mainModel->postsList(),
 		];
 		$this->view->render('Посты', $vars);
 	}

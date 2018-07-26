@@ -10,6 +10,7 @@
         </div>
     </div>
 </header>
+<?php echo $title; ?>
 
 
 

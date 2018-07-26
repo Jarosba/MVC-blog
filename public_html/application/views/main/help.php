@@ -32,6 +32,8 @@
                 <div id="success"></div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-secondary" id="sendMessageButton">Send</button>
+                    <?php echo $title; ?>
+
                 </div>
             </form>
         </div>
